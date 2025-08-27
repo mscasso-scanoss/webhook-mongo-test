@@ -26,3 +26,5 @@ boost::optional<Document> CommonMongodProcessInterface::lookupSingleDocumentLoca
     const NamespaceString& nss,
     const Document& documentKey) {
     AutoGetCollectionForReadMaybeLockFree autoColl(expCtx->opCtx, nss);
+
+algo
