@@ -21,6 +21,8 @@ void CommonMongodProcessInterface::truncateRecordStore(
     });
 }
 
+hhhh
+
 boost::optional<Document> CommonMongodProcessInterface::lookupSingleDocumentLocally(
     const boost::intrusive_ptr<ExpressionContext>& expCtx,
     const NamespaceString& nss,
