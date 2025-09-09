@@ -21,6 +21,19 @@ void CommonMongodProcessInterface::truncateRecordStore(
     });
 }
 
+void CommonMongodProcessInterface::truncateRecordStore(
+    const boost::intrusive_ptr<ExpressionContext>& expCtx, RecordStore* rs) const {
+    assertIgnorePrepareConflictsBehavior(expCtx);
+    writeConflictRetry(expCtx->opCtx, "MPI::truncateRecordStore", expCtx->ns.ns(), [&] {
+        Lock::GlobalLock lk(expCtx->opCtx, MODE_IS);
+        WriteUnitOfWork wuow(expCtx->opCtx);
+        auto status = rs->truncate(expCtx->opCtx);
+        tassert(5643000, "Unable to clear record store", status.isOK());
+        wuow.commit();
+    });
+}
+
+
 hhhh
 
 boost::optional<Document> CommonMongodProcessInterface::lookupSingleDocumentLocally(
